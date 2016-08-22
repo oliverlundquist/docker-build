@@ -1,0 +1,27 @@
+version: '2'
+services:
+  nginx:
+    image: oliverlundquist/nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ~/docker/mystore-api:/var/app/current
+    networks:
+      - php-app
+  php:
+    image: oliverlundquist/php7:latest
+    volumes:
+      - ~/docker/mystore-api:/var/app/current
+    networks:
+      - php-app
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    networks:
+      - php-app
+networks:
+  php-app:
+    driver: bridge
