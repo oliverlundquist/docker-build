@@ -21,7 +21,7 @@ BOL=$(ESCAPE)[2K$(ESCAPE)[0G
 ##
 build:
 	@echo "$(GREEN)Building Nginx$(RESET)"
-	- @docker build -f build/nginx --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/nginx:$(TAG) .
+	- @docker build -f docker/build/nginx --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/nginx:$(TAG) .
 	@echo "$(GREEN)Building Nginx:$(RESET) Done ✓"
 	@echo ""
 	@echo "$(GREEN)Deploying Nginx$(RESET)"
@@ -29,7 +29,7 @@ build:
 	@echo "$(GREEN)Deploying Nginx:$(RESET) Done ✓"
 	@echo ""
 	@echo "$(GREEN)Building PHP7$(RESET)"
-	- @docker build -f build/php7 --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7:$(TAG) .
+	- @docker build -f docker/build/php7 --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7:$(TAG) .
 	@echo "$(GREEN)Building PHP7:$(RESET) Done ✓"
 	@echo ""
 	@echo "$(GREEN)Deploying PHP7$(RESET)"
