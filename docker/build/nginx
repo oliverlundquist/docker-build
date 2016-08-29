@@ -1,4 +1,4 @@
 FROM nginx:1.10
-MAINTAINER Mystore AS "info@mystore.no"
+MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 COPY docker/build/assets/nginx.conf /etc/nginx/conf.d/default.conf
