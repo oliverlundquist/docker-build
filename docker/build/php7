@@ -11,10 +11,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install pdo_mysql
 
-RUN apt-get update && apt-get install -y \
-        curl \
-        sudo \
-    && curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash - \
-    && apt-get install -y nodejs
-
 RUN apt-get update && apt-get install -y sshpass
+
+# Add www-data to root group, so that it has write permissions to storage/framework/views
+RUN usermod -a -G root www-data
