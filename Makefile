@@ -19,22 +19,33 @@ BOL=$(ESCAPE)[2K$(ESCAPE)[0G
 ##
 # Commands
 ##
-build:
-	@echo "$(GREEN)Building Nginx$(RESET)"
-	- @docker build -f docker/build/nginx --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/nginx:$(TAG) .
-	@echo "$(GREEN)Building Nginx:$(RESET) Done ✓"
-	@echo ""
-	@echo "$(GREEN)Deploying Nginx$(RESET)"
-	- @docker push $(NAMESPACE)/nginx:$(TAG)
-	@echo "$(GREEN)Deploying Nginx:$(RESET) Done ✓"
+build-php:
 	@echo ""
 	@echo "$(GREEN)Building PHP7$(RESET)"
 	- @docker build -f docker/build/php7 --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7:$(TAG) .
 	@echo "$(GREEN)Building PHP7:$(RESET) Done ✓"
 	@echo ""
+
+build-nginx:
+	@echo ""
+	@echo "$(GREEN)Building Nginx$(RESET)"
+	- @docker build -f docker/build/nginx --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/nginx:$(TAG) .
+	@echo "$(GREEN)Building Nginx:$(RESET) Done ✓"
+	@echo ""
+
+deploy-php:
+	@echo ""
 	@echo "$(GREEN)Deploying PHP7$(RESET)"
 	- @docker push $(NAMESPACE)/php7:$(TAG)
 	@echo "$(GREEN)Deploying PHP7:$(RESET) Done ✓"
+	@echo ""
+
+deploy-nginx:
+	@echo ""
+	@echo "$(GREEN)Deploying Nginx$(RESET)"
+	- @docker push $(NAMESPACE)/nginx:$(TAG)
+	@echo "$(GREEN)Deploying Nginx:$(RESET) Done ✓"
+	@echo ""
 
 run:
 	@echo "$(GREEN)Creating Network$(RESET)"
