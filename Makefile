@@ -33,6 +33,13 @@ build-nginx:
 	@echo "$(GREEN)Building Nginx:$(RESET) Done ✓"
 	@echo ""
 
+build-logstash:
+	@echo ""
+	@echo "$(GREEN)Building Logstash$(RESET)"
+	- @docker build -f docker/build/logstash --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/logstash:$(TAG) .
+	@echo "$(GREEN)Building Logstash:$(RESET) Done ✓"
+	@echo ""
+
 deploy-php:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP7$(RESET)"
@@ -45,6 +52,13 @@ deploy-nginx:
 	@echo "$(GREEN)Deploying Nginx$(RESET)"
 	- @docker push $(NAMESPACE)/nginx:$(TAG)
 	@echo "$(GREEN)Deploying Nginx:$(RESET) Done ✓"
+	@echo ""
+
+deploy-logstash:
+	@echo ""
+	@echo "$(GREEN)Deploying Logstash$(RESET)"
+	- @docker push $(NAMESPACE)/logstash:$(TAG)
+	@echo "$(GREEN)Deploying Logstash:$(RESET) Done ✓"
 	@echo ""
 
 run:

@@ -1,0 +1,4 @@
+FROM logstash:5.1.1
+MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+
+CMD ["-f", "/var/app/current/.logstash/logstash.conf"]
