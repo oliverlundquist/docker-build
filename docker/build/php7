@@ -1,4 +1,4 @@
-FROM php:7.0.7-fpm
+FROM php:7.1.0-fpm
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 RUN apt-get update && apt-get install -y \
@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y \
 # Add www-data to root group, so that it has write permissions to storage/framework/views
 RUN usermod -a -G root www-data
 
+# Increase upload size limit to 4 MB
+COPY docker/build/assets/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+
 # Install New Relic PHP agent
 RUN echo 'deb http://apt.newrelic.com/debian/ newrelic non-free' | tee /etc/apt/sources.list.d/newrelic.list \
     && curl -o- https://download.newrelic.com/548C16BF.gpg | apt-key add - \
@@ -25,6 +28,10 @@ RUN { \
         echo '#!/bin/sh'; \
         echo 'sed -i.bak s/PHP\ Application/$NEWRELIC_APPNAME/g /usr/local/etc/php/conf.d/newrelic.ini'; \
         echo 'sed -i.bak s/REPLACE_WITH_REAL_KEY/$NEWRELIC_LICENSE/g /usr/local/etc/php/conf.d/newrelic.ini'; \
+        echo 'touch /var/app/current/storage/logs/lumen.log'; \
+        echo 'touch /var/app/current/storage/logs/laravel.log'; \
+        echo 'chmod 664 /var/app/current/storage/logs/lumen.log'; \
+        echo 'chmod 664 /var/app/current/storage/logs/laravel.log'; \
         echo 'exec $@'; \
     } > /root/run-script.sh \
     && chmod +x /root/run-script.sh
