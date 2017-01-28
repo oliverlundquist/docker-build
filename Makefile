@@ -3,6 +3,7 @@
 ##
 NAMESPACE=oliverlundquist
 TAG=latest
+DUSK_TAG=1.0.0
 NETWORK_NAME=mystore-api
 REPO_PATH=~/repositories/mystoreno/mystore-api
 NGINX_ID=`docker ps | grep $(NAMESPACE)/nginx:$(TAG) | cut -d ' ' -f1`
@@ -26,6 +27,13 @@ build-php:
 	@echo "$(GREEN)Building PHP7:$(RESET) Done ✓"
 	@echo ""
 
+build-php-dusk:
+	@echo ""
+	@echo "$(GREEN)Building PHP7 Dusk$(RESET)"
+	- @docker build -f docker/build/php7-dusk --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7-dusk:$(DUSK_TAG) .
+	@echo "$(GREEN)Building PHP7 Dusk:$(RESET) Done ✓"
+	@echo ""
+
 build-nginx:
 	@echo ""
 	@echo "$(GREEN)Building Nginx$(RESET)"
@@ -45,6 +53,13 @@ deploy-php:
 	@echo "$(GREEN)Deploying PHP7$(RESET)"
 	- @docker push $(NAMESPACE)/php7:$(TAG)
 	@echo "$(GREEN)Deploying PHP7:$(RESET) Done ✓"
+	@echo ""
+
+deploy-php-dusk:
+	@echo ""
+	@echo "$(GREEN)Deploying PHP7 Dusk$(RESET)"
+	- @docker push $(NAMESPACE)/php7-dusk:$(DUSK_TAG)
+	@echo "$(GREEN)Deploying PHP7 Dusk:$(RESET) Done ✓"
 	@echo ""
 
 deploy-nginx:
