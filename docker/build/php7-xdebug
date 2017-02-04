@@ -1,0 +1,23 @@
+FROM oliverlundquist/php7:latest
+MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+
+RUN pecl install xdebug-2.5.0 && docker-php-ext-enable xdebug
+
+RUN { \
+        echo 'xdebug.remote_enable=1'; \
+        echo 'xdebug.remote_autostart=1'; \
+        echo 'xdebug.remote_host='; \
+        echo 'xdebug.idekey=docker'; \
+        echo 'xdebug.profiler_enable_trigger=1'; \
+        echo 'xdebug.profiler_output_name=%H%.R.%t'; \
+        echo 'xdebug.profiler_output_dir=/var/app/current/xdebug'; \
+    } >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+RUN { \
+        echo '#!/bin/sh'; \
+        echo 'sed -i.bak s/xdebug\.remote_host\=.*/xdebug\.remote_host\=$XDEBUG_HOST/g /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini'; \
+        echo 'exec $@'; \
+    } > /root/run-script.sh \
+    && chmod +x /root/run-script.sh
+
+RUN mkdir -p /var/app/current

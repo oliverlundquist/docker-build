@@ -24,8 +24,13 @@ RUN echo 'deb http://apt.newrelic.com/debian/ newrelic non-free' | tee /etc/apt/
     && apt-get install -y newrelic-php5 \
     && NR_INSTALL_SILENT=true newrelic-install install
 
+# Copy php-fpm config so that we can change the port
+COPY docker/build/assets/php-fpm.conf /usr/local/etc/php-fpm.d/zz-docker.conf
+
 RUN { \
         echo '#!/bin/sh'; \
+        echo 'PHP_FPM_PORT=${PHP_FPM_PORT:-9000}'; \
+        echo 'sed -i.bak s/PHP_FPM_PORT/$PHP_FPM_PORT/g /usr/local/etc/php-fpm.d/zz-docker.conf'; \
         echo 'sed -i.bak s/PHP\ Application/$NEWRELIC_APPNAME/g /usr/local/etc/php/conf.d/newrelic.ini'; \
         echo 'sed -i.bak s/REPLACE_WITH_REAL_KEY/$NEWRELIC_LICENSE/g /usr/local/etc/php/conf.d/newrelic.ini'; \
         echo 'usermod -u 500 www-data'; \

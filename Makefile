@@ -27,6 +27,20 @@ build-php:
 	@echo "$(GREEN)Building PHP7:$(RESET) Done ✓"
 	@echo ""
 
+build-php-xdebug:
+	@echo ""
+	@echo "$(GREEN)Building PHP7 XDebug$(RESET)"
+	- @docker build -f docker/build/php7-xdebug --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7-xdebug:$(TAG) .
+	@echo "$(GREEN)Building PHP7 XDebug:$(RESET) Done ✓"
+	@echo ""
+
+build-php-webgrind:
+	@echo ""
+	@echo "$(GREEN)Building PHP7 Webgrind$(RESET)"
+	- @docker build -f docker/build/php7-webgrind --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7-webgrind:$(TAG) .
+	@echo "$(GREEN)Building PHP7 Webgrind:$(RESET) Done ✓"
+	@echo ""
+
 build-php-dusk:
 	@echo ""
 	@echo "$(GREEN)Building PHP7 Dusk$(RESET)"
@@ -53,6 +67,20 @@ deploy-php:
 	@echo "$(GREEN)Deploying PHP7$(RESET)"
 	- @docker push $(NAMESPACE)/php7:$(TAG)
 	@echo "$(GREEN)Deploying PHP7:$(RESET) Done ✓"
+	@echo ""
+
+deploy-php-xdebug:
+	@echo ""
+	@echo "$(GREEN)Deploying PHP7 XDebug$(RESET)"
+	- @docker push $(NAMESPACE)/php7-xdebug:$(TAG)
+	@echo "$(GREEN)Deploying PHP7 XDebug:$(RESET) Done ✓"
+	@echo ""
+
+deploy-php-webgrind:
+	@echo ""
+	@echo "$(GREEN)Deploying PHP7 Webgrind$(RESET)"
+	- @docker push $(NAMESPACE)/php7-webgrind:$(TAG)
+	@echo "$(GREEN)Deploying PHP7 Webgrind:$(RESET) Done ✓"
 	@echo ""
 
 deploy-php-dusk:
