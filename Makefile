@@ -23,6 +23,7 @@ BOL=$(ESCAPE)[2K$(ESCAPE)[0G
 build-php:
 	@echo ""
 	@echo "$(GREEN)Building PHP7$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/php7:$(TAG)
 	- @docker build -f docker/build/php7 --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7:$(TAG) .
 	@echo "$(GREEN)Building PHP7:$(RESET) Done ✓"
 	@echo ""
@@ -30,6 +31,7 @@ build-php:
 build-php-xdebug:
 	@echo ""
 	@echo "$(GREEN)Building PHP7 XDebug$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/php7-xdebug:$(TAG)
 	- @docker build -f docker/build/php7-xdebug --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7-xdebug:$(TAG) .
 	@echo "$(GREEN)Building PHP7 XDebug:$(RESET) Done ✓"
 	@echo ""
@@ -37,6 +39,7 @@ build-php-xdebug:
 build-php-webgrind:
 	@echo ""
 	@echo "$(GREEN)Building PHP7 Webgrind$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/php7-webgrind:$(TAG)
 	- @docker build -f docker/build/php7-webgrind --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7-webgrind:$(TAG) .
 	@echo "$(GREEN)Building PHP7 Webgrind:$(RESET) Done ✓"
 	@echo ""
@@ -44,6 +47,7 @@ build-php-webgrind:
 build-php-dusk:
 	@echo ""
 	@echo "$(GREEN)Building PHP7 Dusk$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/php7-dusk:$(DUSK_TAG)
 	- @docker build -f docker/build/php7-dusk --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7-dusk:$(DUSK_TAG) .
 	@echo "$(GREEN)Building PHP7 Dusk:$(RESET) Done ✓"
 	@echo ""
@@ -51,6 +55,7 @@ build-php-dusk:
 build-nginx:
 	@echo ""
 	@echo "$(GREEN)Building Nginx$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/nginx:$(TAG)
 	- @docker build -f docker/build/nginx --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/nginx:$(TAG) .
 	@echo "$(GREEN)Building Nginx:$(RESET) Done ✓"
 	@echo ""

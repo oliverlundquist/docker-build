@@ -13,3 +13,4 @@ RUN { \
     && chmod +x /root/run-script.sh
 
 ENTRYPOINT ["/root/run-script.sh"]
+CMD ["nginx"]

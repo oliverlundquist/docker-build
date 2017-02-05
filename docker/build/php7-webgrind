@@ -1,4 +1,4 @@
-FROM oliverlundquist/php7:latest
+FROM oliverlundquist/php7-xdebug:latest
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 RUN apt-get update && apt-get install -y graphviz git
@@ -9,4 +9,4 @@ RUN git clone https://github.com/jokkedk/webgrind.git
 
 COPY docker/build/assets/webgrind_config.php /root/webgrind/config.php
 
-CMD ["php", "-S", "0.0.0.0:9010", "-t", "/root/webgrind"]
+CMD ["php", "-S", "0.0.0.0:9000", "-t", "/root/webgrind"]

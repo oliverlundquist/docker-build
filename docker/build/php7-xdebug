@@ -9,15 +9,14 @@ RUN { \
         echo 'xdebug.remote_host='; \
         echo 'xdebug.idekey=docker'; \
         echo 'xdebug.profiler_enable_trigger=1'; \
-        echo 'xdebug.profiler_output_name=%H%.R.%t'; \
+        echo 'xdebug.profiler_output_name=%R.%t.profiler'; \
         echo 'xdebug.profiler_output_dir=/var/app/current/xdebug'; \
     } >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 RUN { \
         echo '#!/bin/sh'; \
         echo 'sed -i.bak s/xdebug\.remote_host\=.*/xdebug\.remote_host\=$XDEBUG_HOST/g /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini'; \
+        echo 'mkdir -p /var/app/current/xdebug'; \
         echo 'exec $@'; \
     } > /root/run-script.sh \
     && chmod +x /root/run-script.sh
-
-RUN mkdir -p /var/app/current
