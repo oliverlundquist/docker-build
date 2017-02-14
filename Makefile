@@ -60,6 +60,14 @@ build-nginx:
 	@echo "$(GREEN)Building Nginx:$(RESET) Done ✓"
 	@echo ""
 
+build-node-elixir:
+	@echo ""
+	@echo "$(GREEN)Building Node Elixir$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/node-elixir:$(TAG)
+	- @docker build -f docker/build/node-elixir --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/node-elixir:$(TAG) .
+	@echo "$(GREEN)Building Node Elixir:$(RESET) Done ✓"
+	@echo ""
+
 build-logstash:
 	@echo ""
 	@echo "$(GREEN)Building Logstash$(RESET)"
@@ -100,6 +108,13 @@ deploy-nginx:
 	@echo "$(GREEN)Deploying Nginx$(RESET)"
 	- @docker push $(NAMESPACE)/nginx:$(TAG)
 	@echo "$(GREEN)Deploying Nginx:$(RESET) Done ✓"
+	@echo ""
+
+deploy-node-elixir:
+	@echo ""
+	@echo "$(GREEN)Deploying Node Elixir$(RESET)"
+	- @docker push $(NAMESPACE)/node-elixir:$(TAG)
+	@echo "$(GREEN)Deploying Node Elixir:$(RESET) Done ✓"
 	@echo ""
 
 deploy-logstash:

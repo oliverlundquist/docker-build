@@ -1,0 +1,9 @@
+FROM node:6.9.5
+MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+
+WORKDIR /root
+
+COPY docker/build/assets/package.json /root/package.json
+COPY docker/build/assets/webpack.mix.js /root/webpack.mix.js
+
+RUN npm install
