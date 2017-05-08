@@ -1,4 +1,4 @@
-FROM nginx:1.10.3
+FROM nginx:1.13.0
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 RUN apt-get update && apt-get install -y netcat
