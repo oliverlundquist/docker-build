@@ -52,6 +52,14 @@ build-php-dusk:
 	@echo "$(GREEN)Building PHP7 Dusk:$(RESET) Done ✓"
 	@echo ""
 
+build-php-queue-worker:
+	@echo ""
+	@echo "$(GREEN)Building PHP7 Queue Worker$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/php7-queue-worker:$(TAG)
+	- @docker build -f docker/build/php7-queue-worker --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7-queue-worker:$(TAG) .
+	@echo "$(GREEN)Building PHP7 Queue Worker:$(RESET) Done ✓"
+	@echo ""
+
 build-nginx:
 	@echo ""
 	@echo "$(GREEN)Building Nginx$(RESET)"
@@ -101,6 +109,13 @@ deploy-php-dusk:
 	@echo "$(GREEN)Deploying PHP7 Dusk$(RESET)"
 	- @docker push $(NAMESPACE)/php7-dusk:$(DUSK_TAG)
 	@echo "$(GREEN)Deploying PHP7 Dusk:$(RESET) Done ✓"
+	@echo ""
+
+deploy-php-queue-worker:
+	@echo ""
+	@echo "$(GREEN)Deploying PHP7 Queue Worker$(RESET)"
+	- @docker push $(NAMESPACE)/php7-queue-worker:$(TAG)
+	@echo "$(GREEN)Deploying PHP7 Queue Worker:$(RESET) Done ✓"
 	@echo ""
 
 deploy-nginx:

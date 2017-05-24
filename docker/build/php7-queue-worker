@@ -1,0 +1,13 @@
+FROM oliverlundquist/php7:latest
+MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+
+RUN { \
+        echo '#!/bin/bash'; \
+        echo 'while true; do'; \
+        echo '$@'; \
+        echo 'sleep 2'; \
+        echo 'done'; \
+    } > /root/run-script.sh \
+    && chmod +x /root/run-script.sh
+
+CMD ["php", "artisan", "queue:work", "--once", "--queue=webhooks", "--delay=1", "--memory=128", "--sleep=3", "--tries=3"]
