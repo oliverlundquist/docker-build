@@ -28,6 +28,14 @@ build-php:
 	@echo "$(GREEN)Building PHP7:$(RESET) Done ✓"
 	@echo ""
 
+build-php-opcache:
+	@echo ""
+	@echo "$(GREEN)Building PHP7 Opcache$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/php7-opcache:$(TAG)
+	- @docker build -f docker/build/php7-opcache --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7-opcache:$(TAG) .
+	@echo "$(GREEN)Building PHP7 Opcache:$(RESET) Done ✓"
+	@echo ""
+
 build-php-xdebug:
 	@echo ""
 	@echo "$(GREEN)Building PHP7 XDebug$(RESET)"
@@ -83,11 +91,25 @@ build-logstash:
 	@echo "$(GREEN)Building Logstash:$(RESET) Done ✓"
 	@echo ""
 
+build-autovpn:
+	@echo ""
+	@echo "$(GREEN)Building AutoVPN$(RESET)"
+	- @docker build -f docker/build/autovpn --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/autovpn:$(TAG) .
+	@echo "$(GREEN)Building AutoVPN:$(RESET) Done ✓"
+	@echo ""
+
 deploy-php:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP7$(RESET)"
 	- @docker push $(NAMESPACE)/php7:$(TAG)
 	@echo "$(GREEN)Deploying PHP7:$(RESET) Done ✓"
+	@echo ""
+
+deploy-php-opcache:
+	@echo ""
+	@echo "$(GREEN)Deploying PHP7 Opcache$(RESET)"
+	- @docker push $(NAMESPACE)/php7-opcache:$(TAG)
+	@echo "$(GREEN)Deploying PHP7 Opcache:$(RESET) Done ✓"
 	@echo ""
 
 deploy-php-xdebug:

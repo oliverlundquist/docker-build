@@ -1,0 +1,17 @@
+version: '3'
+services:
+  autovpn:
+    image: oliverlundquist/autovpn:latest
+    command: >-
+      bash -c "
+        ./autovpn -G -r us-east-1 || : &&
+        eval `ssh-agent -s` || : &&
+        ssh-add /autovpn/us-east-1_vpnkey.pem || : &&
+        ./autovpn -C -r us-east-1 -k us-east-1_vpnkey || : &&
+        cat us-east-1_aws_vpn.ovpn
+      "
+    volumes:
+      - autovpn-volume:/autovpn
+      - ~/.aws-chips/credentials:/root/.aws/credentials
+volumes:
+  autovpn-volume:
