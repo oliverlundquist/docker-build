@@ -1,4 +1,4 @@
-FROM nginx:1.13.0
+FROM nginx:1.13.3
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 RUN apt-get update && apt-get install -y netcat
@@ -17,5 +17,6 @@ RUN { \
     } > /root/run-script.sh \
     && chmod +x /root/run-script.sh
 
+EXPOSE 80
 ENTRYPOINT ["/root/run-script.sh"]
 CMD ["nginx"]
