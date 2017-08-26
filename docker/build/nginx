@@ -17,6 +17,5 @@ RUN { \
     } > /root/run-script.sh \
     && chmod +x /root/run-script.sh
 
-EXPOSE 80
 ENTRYPOINT ["/root/run-script.sh"]
 CMD ["nginx"]
