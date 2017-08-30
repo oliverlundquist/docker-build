@@ -98,6 +98,13 @@ build-autovpn:
 	@echo "$(GREEN)Building AutoVPN:$(RESET) Done ✓"
 	@echo ""
 
+build-aws-cli:
+	@echo ""
+	@echo "$(GREEN)Building AWS CLI$(RESET)"
+	- @docker build -f docker/build/aws-cli --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/aws-cli:$(TAG) .
+	@echo "$(GREEN)Building AWS CLI:$(RESET) Done ✓"
+	@echo ""
+
 deploy-php:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP7$(RESET)"
@@ -159,6 +166,13 @@ deploy-logstash:
 	@echo "$(GREEN)Deploying Logstash$(RESET)"
 	- @docker push $(NAMESPACE)/logstash:$(TAG)
 	@echo "$(GREEN)Deploying Logstash:$(RESET) Done ✓"
+	@echo ""
+
+deploy-aws-cli:
+	@echo ""
+	@echo "$(GREEN)Deploying AWS CLI$(RESET)"
+	- @docker push $(NAMESPACE)/aws-cli:$(TAG)
+	@echo "$(GREEN)Deploying AWS CLI:$(RESET) Done ✓"
 	@echo ""
 
 run:

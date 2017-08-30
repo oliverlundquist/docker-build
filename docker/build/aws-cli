@@ -1,0 +1,8 @@
+FROM python:3.6.2-stretch
+MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+
+RUN apt-get update && apt-get install -y groff
+
+RUN pip install --upgrade pip
+RUN pip install --upgrade awscli
+RUN pip install --upgrade awsebcli
