@@ -87,6 +87,7 @@ build-node-elixir:
 build-logstash:
 	@echo ""
 	@echo "$(GREEN)Building Logstash$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/logstash:$(TAG)
 	- @docker build -f docker/build/logstash --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/logstash:$(TAG) .
 	@echo "$(GREEN)Building Logstash:$(RESET) Done ✓"
 	@echo ""
@@ -94,6 +95,7 @@ build-logstash:
 build-autovpn:
 	@echo ""
 	@echo "$(GREEN)Building AutoVPN$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/autovpn:$(TAG)
 	- @docker build -f docker/build/autovpn --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/autovpn:$(TAG) .
 	@echo "$(GREEN)Building AutoVPN:$(RESET) Done ✓"
 	@echo ""
@@ -101,6 +103,7 @@ build-autovpn:
 build-aws-cli:
 	@echo ""
 	@echo "$(GREEN)Building AWS CLI$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/aws-cli:$(TAG)
 	- @docker build -f docker/build/aws-cli --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/aws-cli:$(TAG) .
 	@echo "$(GREEN)Building AWS CLI:$(RESET) Done ✓"
 	@echo ""
