@@ -1,0 +1,18 @@
+FROM selenium/standalone-chrome:latest
+MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+
+ENV BASH_ENV=/home/seluser/.bashrc
+
+RUN head -n -6 /opt/google/chrome/google-chrome | sudo tee /opt/google/chrome/google-chrome-updated \
+    && echo '/opt/google/chrome/chrome --no-sandbox "$@"' | sudo tee -a /opt/google/chrome/google-chrome-updated \
+    && sudo mv /opt/google/chrome/google-chrome-updated /opt/google/chrome/google-chrome \
+    && sudo chmod 775 /opt/google/chrome/google-chrome
+
+RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.4/install.sh | bash \
+    && export NVM_DIR="$HOME/.nvm" \
+    && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
+    && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" \
+    && nvm install 6.11.3
+
+RUN sudo mkdir -p /var/app/current
+WORKDIR /var/app/current

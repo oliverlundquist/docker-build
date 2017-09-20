@@ -108,6 +108,14 @@ build-aws-cli:
 	@echo "$(GREEN)Building AWS CLI:$(RESET) Done ✓"
 	@echo ""
 
+build-selenium-node:
+	@echo ""
+	@echo "$(GREEN)Building Selenium Node$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/selenium-node:$(TAG)
+	- @docker build -f docker/build/selenium-node --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/selenium-node:$(TAG) .
+	@echo "$(GREEN)Building Selenium Node:$(RESET) Done ✓"
+	@echo ""
+
 deploy-php:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP7$(RESET)"
@@ -176,6 +184,13 @@ deploy-aws-cli:
 	@echo "$(GREEN)Deploying AWS CLI$(RESET)"
 	- @docker push $(NAMESPACE)/aws-cli:$(TAG)
 	@echo "$(GREEN)Deploying AWS CLI:$(RESET) Done ✓"
+	@echo ""
+
+deploy-selenium-node:
+	@echo ""
+	@echo "$(GREEN)Deploying Selenium Node$(RESET)"
+	- @docker push $(NAMESPACE)/selenium-node:$(TAG)
+	@echo "$(GREEN)Deploying Selenium Node:$(RESET) Done ✓"
 	@echo ""
 
 run:
