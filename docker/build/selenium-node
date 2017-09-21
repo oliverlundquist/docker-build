@@ -8,7 +8,7 @@ ENV NODE_PATH    $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 RUN head -n -6 /opt/google/chrome/google-chrome | sudo tee /opt/google/chrome/google-chrome-updated \
-    && echo '/opt/google/chrome/chrome --no-sandbox "$@"' | sudo tee -a /opt/google/chrome/google-chrome-updated \
+    && echo 'exec -a "$0" /opt/google/chrome/chrome --no-sandbox "$@"' | sudo tee -a /opt/google/chrome/google-chrome-updated \
     && sudo mv /opt/google/chrome/google-chrome-updated /opt/google/chrome/google-chrome \
     && sudo chmod 775 /opt/google/chrome/google-chrome
 
