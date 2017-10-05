@@ -1,7 +1,10 @@
 FROM oliverlundquist/php7-xdebug:latest
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
-RUN apt-get update && apt-get install -y graphviz git
+RUN apt-get update && apt-get install -y \
+        graphviz \
+        git \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
 
