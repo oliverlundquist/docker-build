@@ -23,9 +23,21 @@ BOL=$(ESCAPE)[2K$(ESCAPE)[0G
 build-php:
 	@echo ""
 	@echo "$(GREEN)Building PHP7$(RESET)"
+	- @sed -i'.original' -e '/#PHP_INSTRUCTIONS/r./docker/build/includes/php_instructions' -e 's/#PHP_INSTRUCTIONS//g' docker/build/php7
 	- @docker rmi -f $(NAMESPACE)/php7:$(TAG)
 	- @docker build -f docker/build/php7 --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7:$(TAG) .
+	- @mv docker/build/php7.original docker/build/php7
 	@echo "$(GREEN)Building PHP7:$(RESET) Done ✓"
+	@echo ""
+
+build-php-wordpress:
+	@echo ""
+	@echo "$(GREEN)Building PHP7 WordPress$(RESET)"
+	- @sed -i'.original' -e '/#PHP_INSTRUCTIONS/r./docker/build/includes/php_instructions' -e 's/#PHP_INSTRUCTIONS//g' docker/build/php7-wordpress
+	- @docker rmi -f $(NAMESPACE)/php7-wordpress:$(TAG)
+	- @docker build -f docker/build/php7-wordpress --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7-wordpress:$(TAG) .
+	- @mv docker/build/php7-wordpress.original docker/build/php7-wordpress
+	@echo "$(GREEN)Building PHP7 WordPress:$(RESET) Done ✓"
 	@echo ""
 
 build-php-opcache:

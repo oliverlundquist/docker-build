@@ -1,71 +1,14 @@
 FROM php:7.1.10-fpm
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
-
-ENV NVM_DIR      /root/.nvm
-ENV NVM_VERSION  0.33.4
-ENV NODE_VERSION 6.11.3
-ENV NODE_PATH    $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
-ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-ENV COMPOSER_ALLOW_SUPERUSER 1
-
-RUN apt-get update && apt-get install -y \
-        git \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libmcrypt-dev \
-        libpng12-dev \
-    && docker-php-ext-install -j$(nproc) iconv mcrypt \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-install zip \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
-    && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');" \
-    && mv composer.phar /usr/local/bin/ \
-    && echo '#!/bin/bash\ncomposer.phar self-update && composer.phar "$@"' > /usr/local/bin/composer \
-    && chmod 755 /usr/local/bin/composer
-
-# Install NVM and Node
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash \
-    && . $NVM_DIR/nvm.sh \
-    && nvm install $NODE_VERSION
-
-# Add www-data to root group, so that it has write permissions to storage/framework/views
-RUN usermod -a -G root www-data
-
-# Increase upload size limit to 4 MB
-COPY docker/build/assets/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
-
-# Install New Relic PHP agent
-RUN echo 'deb http://apt.newrelic.com/debian/ newrelic non-free' | tee /etc/apt/sources.list.d/newrelic.list \
-    && curl -o- https://download.newrelic.com/548C16BF.gpg | apt-key add - \
-    && apt-get update \
-    && apt-get install -y newrelic-php5 \
-    && NR_INSTALL_SILENT=true newrelic-install install \
-    && rm -rf /var/lib/apt/lists/*
-
-# Other shell scripts
-RUN echo '#!/bin/bash\nls -lah "$@"' > /usr/local/bin/ll \
-    && chmod 755 /usr/local/bin/ll
+#PHP_INSTRUCTIONS
 
 RUN { \
-        echo '#!/bin/sh'; \
-        echo 'sed -i.bak s/PHP\ Application/$NEWRELIC_APPNAME/g /usr/local/etc/php/conf.d/newrelic.ini'; \
-        echo 'sed -i.bak s/REPLACE_WITH_REAL_KEY/$NEWRELIC_LICENSE/g /usr/local/etc/php/conf.d/newrelic.ini'; \
-        echo 'usermod -u 500 www-data'; \
-        echo 'groupmod -g 500 www-data'; \
         echo 'touch /var/app/current/storage/logs/lumen.log > /dev/null 2>&1'; \
         echo 'touch /var/app/current/storage/logs/laravel.log > /dev/null 2>&1'; \
         echo 'chmod 664 /var/app/current/storage/logs/lumen.log > /dev/null 2>&1'; \
         echo 'chmod 664 /var/app/current/storage/logs/laravel.log > /dev/null 2>&1'; \
         echo 'exec $@'; \
-    } > /root/run-script.sh \
-    && chmod +x /root/run-script.sh
+    } >> /root/run-script.sh
 
 RUN mkdir -p /var/app/current
 WORKDIR /var/app/current
