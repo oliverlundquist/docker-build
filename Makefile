@@ -23,7 +23,13 @@ BOL=$(ESCAPE)[2K$(ESCAPE)[0G
 build-php:
 	@echo ""
 	@echo "$(GREEN)Building PHP7$(RESET)"
-	- @sed -i'.original' -e '/#PHP_INSTRUCTIONS/r./docker/build/includes/php_instructions' -e 's/#PHP_INSTRUCTIONS//g' docker/build/php7
+	- @sed \
+		-i'.original' \
+		-e '/INCLUDE PHP_INSTRUCTIONS/r./docker/build/includes/php_instructions' \
+		-e '/INCLUDE PHP_OPCACHE_INSTRUCTIONS/r./docker/build/includes/php_opcache_instructions' \
+		-e 's/INCLUDE PHP_INSTRUCTIONS//g' \
+		-e 's/INCLUDE PHP_OPCACHE_INSTRUCTIONS//g' \
+		docker/build/php7
 	- @docker rmi -f $(NAMESPACE)/php7:$(TAG)
 	- @docker build -f docker/build/php7 --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7:$(TAG) .
 	- @mv docker/build/php7.original docker/build/php7
@@ -33,7 +39,13 @@ build-php:
 build-php-wordpress:
 	@echo ""
 	@echo "$(GREEN)Building PHP7 WordPress$(RESET)"
-	- @sed -i'.original' -e '/#PHP_INSTRUCTIONS/r./docker/build/includes/php_instructions' -e 's/#PHP_INSTRUCTIONS//g' docker/build/php7-wordpress
+	- @sed \
+		-i'.original' \
+		-e '/INCLUDE PHP_INSTRUCTIONS/r./docker/build/includes/php_instructions' \
+		-e '/INCLUDE PHP_OPCACHE_INSTRUCTIONS/r./docker/build/includes/php_opcache_instructions' \
+		-e 's/INCLUDE PHP_INSTRUCTIONS//g' \
+		-e 's/INCLUDE PHP_OPCACHE_INSTRUCTIONS//g' \
+		docker/build/php7-wordpress
 	- @docker rmi -f $(NAMESPACE)/php7-wordpress:$(TAG)
 	- @docker build -f docker/build/php7-wordpress --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7-wordpress:$(TAG) .
 	- @mv docker/build/php7-wordpress.original docker/build/php7-wordpress
@@ -43,8 +55,16 @@ build-php-wordpress:
 build-php-opcache:
 	@echo ""
 	@echo "$(GREEN)Building PHP7 Opcache$(RESET)"
+	- @sed \
+		-i'.original' \
+		-e '/INCLUDE PHP_INSTRUCTIONS/r./docker/build/includes/php_instructions' \
+		-e '/INCLUDE PHP_OPCACHE_INSTRUCTIONS/r./docker/build/includes/php_opcache_instructions' \
+		-e 's/INCLUDE PHP_INSTRUCTIONS//g' \
+		-e 's/INCLUDE PHP_OPCACHE_INSTRUCTIONS//g' \
+		docker/build/php7-opcache
 	- @docker rmi -f $(NAMESPACE)/php7-opcache:$(TAG)
 	- @docker build -f docker/build/php7-opcache --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php7-opcache:$(TAG) .
+	- @mv docker/build/php7-opcache.original docker/build/php7-opcache
 	@echo "$(GREEN)Building PHP7 Opcache:$(RESET) Done ✓"
 	@echo ""
 

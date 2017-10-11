@@ -1,6 +1,6 @@
 FROM php:7.1.10-fpm
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
-#PHP_INSTRUCTIONS
+INCLUDE PHP_INSTRUCTIONS
 
 RUN { \
         echo 'touch /var/app/current/storage/logs/lumen.log > /dev/null 2>&1'; \

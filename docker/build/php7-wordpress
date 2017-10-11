@@ -1,3 +1,6 @@
 FROM php:7.1.10-apache
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
-#PHP_INSTRUCTIONS
+INCLUDE PHP_INSTRUCTIONS
+INCLUDE PHP_OPCACHE_INSTRUCTIONS
+
+CMD ["apache2-foreground"]
