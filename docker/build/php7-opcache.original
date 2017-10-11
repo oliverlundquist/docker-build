@@ -1,3 +1,0 @@
-FROM oliverlundquist/php7:latest
-MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
-INCLUDE PHP_OPCACHE_INSTRUCTIONS
