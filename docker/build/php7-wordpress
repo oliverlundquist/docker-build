@@ -3,4 +3,10 @@ MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 INCLUDE PHP_INSTRUCTIONS
 INCLUDE PHP_OPCACHE_INSTRUCTIONS
 
+RUN docker-php-ext-install mysqli
+
+RUN a2enmod ssl rewrite headers expires \
+        && a2dismod -f autoindex
+
+ENTRYPOINT ["/root/run-script.sh"]
 CMD ["apache2-foreground"]
