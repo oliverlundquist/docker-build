@@ -155,6 +155,13 @@ deploy-php:
 	@echo "$(GREEN)Deploying PHP7:$(RESET) Done ✓"
 	@echo ""
 
+deploy-php-wordpress:
+	@echo ""
+	@echo "$(GREEN)Deploying PHP7 WordPress$(RESET)"
+	- @docker push $(NAMESPACE)/php7-wordpress:$(TAG)
+	@echo "$(GREEN)Deploying PHP7 WordPress:$(RESET) Done ✓"
+	@echo ""
+
 deploy-php-opcache:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP7 Opcache$(RESET)"
