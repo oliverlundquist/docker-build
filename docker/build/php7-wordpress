@@ -8,5 +8,13 @@ RUN docker-php-ext-install mysqli
 RUN a2enmod ssl rewrite headers expires \
         && a2dismod -f autoindex
 
+RUN set -ex \
+	&& . "$APACHE_ENVVARS" \
+	&& rm -rvf /var/app/current \
+	&& mkdir -p /var/app/current \
+	&& chown -R "$APACHE_RUN_USER:$APACHE_RUN_GROUP" /var/app/current
+
+WORKDIR /var/app/current
+
 ENTRYPOINT ["/root/run-script.sh"]
 CMD ["apache2-foreground"]
