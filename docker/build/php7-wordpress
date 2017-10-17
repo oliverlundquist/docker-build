@@ -5,7 +5,7 @@ INCLUDE PHP_OPCACHE_INSTRUCTIONS
 
 RUN docker-php-ext-install mysqli
 
-RUN a2enmod ssl rewrite headers expires \
+RUN a2enmod ssl rewrite headers \
         && a2dismod -f autoindex
 
 RUN set -ex \
