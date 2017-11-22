@@ -9,6 +9,17 @@ ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 RUN sudo apt-get update && sudo apt-get install -y \
         git \
+        tmux \
+        software-properties-common \
+        python-software-properties \
+    && sudo add-apt-repository --remove ppa:jonathonf/ffmpeg-3 \
+    && sudo add-apt-repository ppa:jonathonf/ffmpeg-3 \
+    && sudo apt-get update && sudo apt-get install -y \
+        libavdevice57 \
+        ffmpeg \
+        libav-tools \
+        x264 \
+        x265 \
     && sudo rm -rf /var/lib/apt/lists/*
 
 RUN head -n -6 /opt/google/chrome/google-chrome | sudo tee /opt/google/chrome/google-chrome-updated \
@@ -19,6 +30,10 @@ RUN head -n -6 /opt/google/chrome/google-chrome | sudo tee /opt/google/chrome/go
 RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash \
     && . $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION
+
+# Tweaked Original Entry Point Script to Enable Listen TCP on XVFB
+COPY docker/build/assets/selenium-entry-point.sh /opt/bin/entry_point.sh
+RUN sudo chmod 775 /opt/bin/entry_point.sh
 
 RUN sudo mkdir -p /var/app/current
 WORKDIR /var/app/current
