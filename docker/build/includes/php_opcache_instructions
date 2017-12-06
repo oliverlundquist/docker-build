@@ -1,9 +1,5 @@
 RUN docker-php-ext-install opcache
 
-#         echo 'opcache.memory_consumption=512'; \
-#         echo 'opcache.interned_strings_buffer=64'; \
-#         echo 'opcache.max_accelerated_files=32531'; \
-
 RUN { \
         echo 'opcache.enable=1'; \
         echo 'opcache.validate_timestamps=VALIDATE_TIMESTAMPS'; \
