@@ -7,6 +7,8 @@ ENV NODE_VERSION 6.11.3
 ENV NODE_PATH    $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
+EXPOSE 99
+
 RUN sudo apt-get update && sudo apt-get install -y \
         git \
     && sudo rm -rf /var/lib/apt/lists/*
