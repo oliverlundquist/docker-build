@@ -9,20 +9,9 @@ ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 RUN sudo apt-get update && sudo apt-get install -y \
         git \
-        tmux \
-        software-properties-common \
-        python-software-properties \
-    && sudo add-apt-repository --remove ppa:jonathonf/ffmpeg-3 \
-    && sudo add-apt-repository ppa:jonathonf/ffmpeg-3 \
-    && sudo apt-get update && sudo apt-get install -y \
-        libavdevice57 \
-        ffmpeg \
-        libav-tools \
-        x264 \
-        x265 \
     && sudo rm -rf /var/lib/apt/lists/*
 
-RUN head -n -6 /opt/google/chrome/google-chrome | sudo tee /opt/google/chrome/google-chrome-updated \
+RUN head -n -1 /opt/google/chrome/google-chrome | sudo tee /opt/google/chrome/google-chrome-updated \
     && echo 'exec -a "$0" /opt/google/chrome/chrome --no-sandbox "$@"' | sudo tee -a /opt/google/chrome/google-chrome-updated \
     && sudo mv /opt/google/chrome/google-chrome-updated /opt/google/chrome/google-chrome \
     && sudo chmod 775 /opt/google/chrome/google-chrome

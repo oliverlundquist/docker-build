@@ -4,11 +4,15 @@ ENV NODE_VERSION 6.11.3
 ENV NODE_PATH    $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV LC_CTYPE C.UTF-8
 
 RUN apt-get update && apt-get install -y \
         curl \
         gnupg2 \
         git \
+        procps \
+        ffmpeg \
+        tmux \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
