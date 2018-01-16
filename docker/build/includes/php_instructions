@@ -43,12 +43,22 @@ RUN usermod -a -G root www-data
 # Increase upload size limit to 4 MB
 COPY docker/build/assets/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 
+# Install New Relic PHP agent
+RUN echo 'deb http://apt.newrelic.com/debian/ newrelic non-free' | tee /etc/apt/sources.list.d/newrelic.list \
+    && curl -o- https://download.newrelic.com/548C16BF.gpg | apt-key add - \
+    && apt-get update \
+    && apt-get install -y newrelic-php5 \
+    && NR_INSTALL_SILENT=true newrelic-install install \
+    && rm -rf /var/lib/apt/lists/*
+
 # Other shell scripts
 RUN echo '#!/bin/bash\nls -lah "$@"' > /usr/local/bin/ll \
     && chmod 755 /usr/local/bin/ll
 
 RUN { \
         echo '#!/bin/sh'; \
+        echo 'sed -i.bak s/PHP\ Application/$NEWRELIC_APPNAME/g /usr/local/etc/php/conf.d/newrelic.ini'; \
+        echo 'sed -i.bak s/REPLACE_WITH_REAL_KEY/$NEWRELIC_LICENSE/g /usr/local/etc/php/conf.d/newrelic.ini'; \
         echo 'usermod -u 500 www-data'; \
         echo 'groupmod -g 500 www-data'; \
     } > /root/run-script.sh \
