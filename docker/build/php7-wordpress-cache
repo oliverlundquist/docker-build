@@ -1,0 +1,10 @@
+FROM oliverlundquist/php7-wordpress:latest
+MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+
+RUN a2enmod cache cache_disk
+
+RUN set -ex \
+	&& rm -rvf /var/cache/apache2/mod_cache_disk \
+	&& mkdir -p /var/cache/apache2/mod_cache_disk \
+	&& chown -R root:root /var/cache/apache2/mod_cache_disk \
+	&& chmod 775 /var/cache/apache2/mod_cache_disk

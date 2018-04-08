@@ -6,3 +6,4 @@ make deploy-php-xdebug
 make deploy-php-webgrind
 make deploy-php-queue-worker
 make deploy-php-wordpress
+make deploy-php-wordpress-cache

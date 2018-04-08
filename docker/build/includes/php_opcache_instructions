@@ -9,7 +9,6 @@ RUN { \
     } >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 RUN { \
-        echo '#!/bin/sh'; \
         head -n -1 /root/run-script.sh; \
         echo 'sed -i.bak s/VALIDATE_TIMESTAMPS/${VALIDATE_TIMESTAMPS:-0}/g /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini'; \
         echo 'sed -i.bak s/REVALIDATE_FREQ/${REVALIDATE_FREQ:-2}/g /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini'; \
