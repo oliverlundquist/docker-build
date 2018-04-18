@@ -2,8 +2,8 @@ FROM selenium/standalone-chrome:latest
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 ENV NVM_DIR      /home/seluser/.nvm
-ENV NVM_VERSION  0.33.4
-ENV NODE_VERSION 6.11.3
+ENV NVM_VERSION  0.33.9
+ENV NODE_VERSION 8.11.1
 ENV NODE_PATH    $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
@@ -18,7 +18,8 @@ RUN head -n -1 /opt/google/chrome/google-chrome | sudo tee /opt/google/chrome/go
     && sudo mv /opt/google/chrome/google-chrome-updated /opt/google/chrome/google-chrome \
     && sudo chmod 775 /opt/google/chrome/google-chrome
 
-RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash \
+RUN mkdir -p $NVM_DIR \
+    && wget -qO- https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash \
     && . $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION
 

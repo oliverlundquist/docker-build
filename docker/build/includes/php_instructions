@@ -1,6 +1,6 @@
 ENV NVM_DIR      /root/.nvm
-ENV NVM_VERSION  0.33.4
-ENV NODE_VERSION 6.11.3
+ENV NVM_VERSION  0.33.9
+ENV NODE_VERSION 8.11.1
 ENV NODE_PATH    $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER 1
@@ -34,7 +34,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && chmod 755 /usr/local/bin/composer
 
 # Install NVM and Node
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash \
+RUN mkdir -p $NVM_DIR \
+    && curl -o- https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash \
     && . $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION
 
