@@ -10,6 +10,10 @@ ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 EXPOSE 99
 
 RUN sudo apt-get update && sudo apt-get install -y \
+        autoconf \
+        libtool \
+        pkg-config \
+        nasm \
         git \
     && sudo rm -rf /var/lib/apt/lists/*
 
