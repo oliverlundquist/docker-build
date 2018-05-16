@@ -148,6 +148,14 @@ build-aws-cli:
 	@echo "$(GREEN)Building AWS CLI:$(RESET) Done ✓"
 	@echo ""
 
+build-pusher-local-dev-server:
+	@echo ""
+	@echo "$(GREEN)Building Pusher Local Dev Server$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/pusher-local-dev-server:$(TAG)
+	- @docker build -f docker/build/pusher-local-dev-server --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/pusher-local-dev-server:$(TAG) .
+	@echo "$(GREEN)Building Pusher Local Dev Server:$(RESET) Done ✓"
+	@echo ""
+
 build-selenium-chrome-node:
 	@echo ""
 	@echo "$(GREEN)Building Selenium Node$(RESET)"
@@ -238,6 +246,13 @@ deploy-aws-cli:
 	@echo "$(GREEN)Deploying AWS CLI$(RESET)"
 	- @docker push $(NAMESPACE)/aws-cli:$(TAG)
 	@echo "$(GREEN)Deploying AWS CLI:$(RESET) Done ✓"
+	@echo ""
+
+deploy-pusher-local-dev-server:
+	@echo ""
+	@echo "$(GREEN)Deploying Pusher Local Dev Server$(RESET)"
+	- @docker push $(NAMESPACE)/pusher-local-dev-server:$(TAG)
+	@echo "$(GREEN)Deploying Pusher Local Dev Server:$(RESET) Done ✓"
 	@echo ""
 
 deploy-selenium-chrome-node:
