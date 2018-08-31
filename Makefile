@@ -164,6 +164,14 @@ build-selenium-chrome-node:
 	@echo "$(GREEN)Building Selenium Node:$(RESET) Done ✓"
 	@echo ""
 
+build-serverless:
+	@echo ""
+	@echo "$(GREEN)Building Serverless$(RESET)"
+	- @docker rmi -f $(NAMESPACE)/serverless:$(TAG)
+	- @docker build -f docker/build/serverless --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/serverless:$(TAG) .
+	@echo "$(GREEN)Building Serverless:$(RESET) Done ✓"
+	@echo ""
+
 deploy-php:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP7$(RESET)"
@@ -260,6 +268,13 @@ deploy-selenium-chrome-node:
 	@echo "$(GREEN)Deploying Selenium Node$(RESET)"
 	- @docker push $(NAMESPACE)/selenium-chrome-node:$(TAG)
 	@echo "$(GREEN)Deploying Selenium Node:$(RESET) Done ✓"
+	@echo ""
+
+deploy-serverless:
+	@echo ""
+	@echo "$(GREEN)Deploying Serverless$(RESET)"
+	- @docker push $(NAMESPACE)/serverless:$(TAG)
+	@echo "$(GREEN)Deploying Serverless:$(RESET) Done ✓"
 	@echo ""
 
 run:

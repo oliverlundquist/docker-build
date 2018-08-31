@@ -1,4 +1,4 @@
-FROM docker.elastic.co/logstash/logstash:5.5.3
+FROM docker.elastic.co/logstash/logstash:6.3.2
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 CMD ["--path.config", "/var/app/current/.logstash/logstash.conf", "--path.settings", "/var/app/current/.logstash"]
