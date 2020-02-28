@@ -1,4 +1,4 @@
-FROM oliverlundquist/php7-wordpress:latest
+FROM oliverlundquist/php74-wordpress:latest
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 RUN a2enmod cache cache_disk

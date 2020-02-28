@@ -1,4 +1,4 @@
-FROM oliverlundquist/php7:latest
+FROM oliverlundquist/php74:latest
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 RUN pecl install xdebug-2.6.0 && docker-php-ext-enable xdebug

@@ -9,7 +9,7 @@ services:
     networks:
       - php-app
   php:
-    image: oliverlundquist/php7:latest
+    image: oliverlundquist/php74:latest
     volumes:
       - ~/docker/mystore-api/www:/var/app/current
     networks:

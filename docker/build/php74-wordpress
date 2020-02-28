@@ -1,4 +1,4 @@
-FROM php:7.2.4-apache
+FROM php:7.4.2-apache
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 INCLUDE PHP_INSTRUCTIONS
 INCLUDE PHP_OPCACHE_INSTRUCTIONS
