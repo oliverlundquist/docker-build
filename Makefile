@@ -6,7 +6,7 @@ TAG=latest
 DUSK_TAG=1.0.0
 NETWORK_NAME=mystore-api
 REPO_PATH=~/repositories/mystoreno/mystore-api
-NGINX_ID=`docker ps | grep $(NAMESPACE)/nginx:$(TAG) | cut -d ' ' -f1`
+NGINX_ID=`docker ps | grep $(NAMESPACE)/nginx117:$(TAG) | cut -d ' ' -f1`
 PHP_ID=`docker ps | grep $(NAMESPACE)/php74:$(TAG) | cut -d ' ' -f1`
 
 ##
@@ -111,8 +111,8 @@ build-php-wordpress-cache:
 build-nginx:
 	@echo ""
 	@echo "$(GREEN)Building Nginx$(RESET)"
-	- @docker rmi -f $(NAMESPACE)/nginx:$(TAG)
-	- @docker build -f docker/build/nginx --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/nginx:$(TAG) .
+	- @docker rmi -f $(NAMESPACE)/nginx117:$(TAG)
+	- @docker build -f docker/build/nginx117 --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/nginx117:$(TAG) .
 	@echo "$(GREEN)Building Nginx:$(RESET) Done ✓"
 	@echo ""
 
@@ -231,7 +231,7 @@ deploy-php-wordpress-cache:
 deploy-nginx:
 	@echo ""
 	@echo "$(GREEN)Deploying Nginx$(RESET)"
-	- @docker push $(NAMESPACE)/nginx:$(TAG)
+	- @docker push $(NAMESPACE)/nginx117:$(TAG)
 	@echo "$(GREEN)Deploying Nginx:$(RESET) Done ✓"
 	@echo ""
 
@@ -287,7 +287,7 @@ run:
 	@echo "$(GREEN)Starting PHP7:$(RESET) Done ✓"
 	@echo ""
 	@echo "$(GREEN)Starting Nginx$(RESET)"
-	- @docker run -d --net=$(NETWORK_NAME) -v $(REPO_PATH):/srv/www/mystore-api -p 80:80 $(NAMESPACE)/nginx:$(TAG) 2>/dev/null
+	- @docker run -d --net=$(NETWORK_NAME) -v $(REPO_PATH):/srv/www/mystore-api -p 80:80 $(NAMESPACE)/nginx117:$(TAG) 2>/dev/null
 	@echo "$(GREEN)Starting Nginx:$(RESET) Done ✓"
 
 stop:
