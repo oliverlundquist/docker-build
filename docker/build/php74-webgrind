@@ -1,4 +1,4 @@
-FROM oliverlundquist/php7-xdebug:latest
+FROM oliverlundquist/php74-xdebug:latest
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 RUN apt-get update && apt-get install -y \

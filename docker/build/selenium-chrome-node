@@ -2,8 +2,8 @@ FROM selenium/standalone-chrome:latest
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 ENV NVM_DIR      /home/seluser/.nvm
-ENV NVM_VERSION  0.33.9
-ENV NODE_VERSION 8.11.1
+ENV NVM_VERSION  0.35.1
+ENV NODE_VERSION 12.13.1
 ENV NODE_PATH    $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
@@ -27,9 +27,9 @@ RUN mkdir -p $NVM_DIR \
     && . $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION
 
-# Tweaked Original Entry Point Script to Enable Listen TCP on XVFB
-COPY docker/build/assets/selenium-entry-point.sh /opt/bin/entry_point.sh
-RUN sudo chmod 775 /opt/bin/entry_point.sh
+# Tweaked Original Start XVFB Script to Enable Listen TCP on XVFB
+COPY docker/build/assets/selenium-start-xvfb.sh /opt/bin/start-xvfb.sh
+RUN sudo chmod 775 /opt/bin/start-xvfb.sh
 
 RUN sudo mkdir -p /var/app/current
 WORKDIR /var/app/current
