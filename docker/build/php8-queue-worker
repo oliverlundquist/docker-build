@@ -1,4 +1,4 @@
-FROM oliverlundquist/php74:latest
+FROM oliverlundquist/php8:latest
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 RUN { \
