@@ -4,7 +4,7 @@ MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 RUN pecl install xdebug-3.0.4 && docker-php-ext-enable xdebug
 
 RUN { \
-        echo 'xdebug.mode=debug,profile'; \
+        echo 'xdebug.mode=debug,profile,coverage'; \
         echo 'xdebug.start_with_request=1'; \
         echo 'xdebug.client_host='; \
         echo 'xdebug.idekey=PHPSTORM'; \
