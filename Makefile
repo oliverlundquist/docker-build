@@ -123,8 +123,8 @@ build-node-elixir:
 build-logstash:
 	@echo ""
 	@echo "$(GREEN)Building Logstash$(RESET)"
-	- @docker rmi -f $(NAMESPACE)/logstash:$(TAG)
-	- @docker build -f docker/build/logstash --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/logstash:$(TAG) .
+	- @docker rmi -f $(NAMESPACE)/logstash:6.8.21
+	- @docker build -f docker/build/logstash --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/logstash:6.8.21 .
 	@echo "$(GREEN)Building Logstash:$(RESET) Done ✓"
 	@echo ""
 
@@ -241,7 +241,7 @@ deploy-node-elixir:
 deploy-logstash:
 	@echo ""
 	@echo "$(GREEN)Deploying Logstash$(RESET)"
-	- @docker push $(NAMESPACE)/logstash:$(TAG)
+	- @docker push $(NAMESPACE)/logstash:6.8.21
 	@echo "$(GREEN)Deploying Logstash:$(RESET) Done ✓"
 	@echo ""
 
