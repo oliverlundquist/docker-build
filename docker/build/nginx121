@@ -1,4 +1,4 @@
-FROM nginx:1.21.0
+FROM nginx:1.21.6
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 RUN apt-get update && apt-get install -y \

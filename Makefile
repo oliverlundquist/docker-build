@@ -26,8 +26,8 @@ build-php:
 		-e 's/INCLUDE PHP_INSTRUCTIONS//g' \
 		-e 's/INCLUDE PHP_OPCACHE_INSTRUCTIONS//g' \
 		docker/build/php8
-	- @docker rmi -f $(NAMESPACE)/php8:$(TAG)
-	- @docker build -f docker/build/php8 --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php8:$(TAG) .
+	- @docker rmi -f $(NAMESPACE)/php81:$(TAG)
+	- @docker build -f docker/build/php8 --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php81:$(TAG) .
 	- @mv docker/build/php8.original docker/build/php8
 	@echo "$(GREEN)Building PHP8:$(RESET) Done ✓"
 	@echo ""
@@ -42,8 +42,8 @@ build-php-wordpress:
 		-e 's/INCLUDE PHP_INSTRUCTIONS//g' \
 		-e 's/INCLUDE PHP_OPCACHE_INSTRUCTIONS//g' \
 		docker/build/php8-wordpress
-	- @docker rmi -f $(NAMESPACE)/php8-wordpress:$(TAG)
-	- @docker build -f docker/build/php8-wordpress --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php8-wordpress:$(TAG) .
+	- @docker rmi -f $(NAMESPACE)/php81-wordpress:$(TAG)
+	- @docker build -f docker/build/php8-wordpress --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php81-wordpress:$(TAG) .
 	- @mv docker/build/php8-wordpress.original docker/build/php8-wordpress
 	@echo "$(GREEN)Building PHP8 WordPress:$(RESET) Done ✓"
 	@echo ""
@@ -58,8 +58,8 @@ build-php-opcache:
 		-e 's/INCLUDE PHP_INSTRUCTIONS//g' \
 		-e 's/INCLUDE PHP_OPCACHE_INSTRUCTIONS//g' \
 		docker/build/php8-opcache
-	- @docker rmi -f $(NAMESPACE)/php8-opcache:$(TAG)
-	- @docker build -f docker/build/php8-opcache --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php8-opcache:$(TAG) .
+	- @docker rmi -f $(NAMESPACE)/php81-opcache:$(TAG)
+	- @docker build -f docker/build/php8-opcache --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php81-opcache:$(TAG) .
 	- @mv docker/build/php8-opcache.original docker/build/php8-opcache
 	@echo "$(GREEN)Building PHP8 Opcache:$(RESET) Done ✓"
 	@echo ""
@@ -67,40 +67,40 @@ build-php-opcache:
 build-php-xdebug:
 	@echo ""
 	@echo "$(GREEN)Building PHP8 XDebug$(RESET)"
-	- @docker rmi -f $(NAMESPACE)/php8-xdebug:$(TAG)
-	- @docker build -f docker/build/php8-xdebug --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php8-xdebug:$(TAG) .
+	- @docker rmi -f $(NAMESPACE)/php81-xdebug:$(TAG)
+	- @docker build -f docker/build/php8-xdebug --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php81-xdebug:$(TAG) .
 	@echo "$(GREEN)Building PHP8 XDebug:$(RESET) Done ✓"
 	@echo ""
 
 build-php-webgrind:
 	@echo ""
 	@echo "$(GREEN)Building PHP8 Webgrind$(RESET)"
-	- @docker rmi -f $(NAMESPACE)/php8-webgrind:$(TAG)
-	- @docker build -f docker/build/php8-webgrind --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php8-webgrind:$(TAG) .
+	- @docker rmi -f $(NAMESPACE)/php81-webgrind:$(TAG)
+	- @docker build -f docker/build/php8-webgrind --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php81-webgrind:$(TAG) .
 	@echo "$(GREEN)Building PHP8 Webgrind:$(RESET) Done ✓"
 	@echo ""
 
 build-php-dusk:
 	@echo ""
 	@echo "$(GREEN)Building PHP8 Dusk$(RESET)"
-	- @docker rmi -f $(NAMESPACE)/php8-dusk:$(DUSK_TAG)
-	- @docker build -f docker/build/php8-dusk --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php8-dusk:$(DUSK_TAG) .
+	- @docker rmi -f $(NAMESPACE)/php81-dusk:$(DUSK_TAG)
+	- @docker build -f docker/build/php8-dusk --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php81-dusk:$(DUSK_TAG) .
 	@echo "$(GREEN)Building PHP8 Dusk:$(RESET) Done ✓"
 	@echo ""
 
 build-php-queue-worker:
 	@echo ""
 	@echo "$(GREEN)Building PHP8 Queue Worker$(RESET)"
-	- @docker rmi -f $(NAMESPACE)/php8-queue-worker:$(TAG)
-	- @docker build -f docker/build/php8-queue-worker --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php8-queue-worker:$(TAG) .
+	- @docker rmi -f $(NAMESPACE)/php81-queue-worker:$(TAG)
+	- @docker build -f docker/build/php8-queue-worker --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php81-queue-worker:$(TAG) .
 	@echo "$(GREEN)Building PHP8 Queue Worker:$(RESET) Done ✓"
 	@echo ""
 
 build-php-wordpress-cache:
 	@echo ""
 	@echo "$(GREEN)Building PHP8 WordPress Cache$(RESET)"
-	- @docker rmi -f $(NAMESPACE)/php8-wordpress-cache:$(TAG)
-	- @docker build -f docker/build/php8-wordpress-cache --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php8-wordpress-cache:$(TAG) .
+	- @docker rmi -f $(NAMESPACE)/php81-wordpress-cache:$(TAG)
+	- @docker build -f docker/build/php8-wordpress-cache --force-rm=true --rm=true --no-cache --tag=$(NAMESPACE)/php81-wordpress-cache:$(TAG) .
 	@echo "$(GREEN)Building PHP8 WordPress Cache:$(RESET) Done ✓"
 	@echo ""
 
@@ -171,56 +171,56 @@ build-serverless:
 deploy-php:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP8$(RESET)"
-	- @docker push $(NAMESPACE)/php8:$(TAG)
+	- @docker push $(NAMESPACE)/php81:$(TAG)
 	@echo "$(GREEN)Deploying PHP8:$(RESET) Done ✓"
 	@echo ""
 
 deploy-php-wordpress:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP8 WordPress$(RESET)"
-	- @docker push $(NAMESPACE)/php8-wordpress:$(TAG)
+	- @docker push $(NAMESPACE)/php81-wordpress:$(TAG)
 	@echo "$(GREEN)Deploying PHP8 WordPress:$(RESET) Done ✓"
 	@echo ""
 
 deploy-php-opcache:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP8 Opcache$(RESET)"
-	- @docker push $(NAMESPACE)/php8-opcache:$(TAG)
+	- @docker push $(NAMESPACE)/php81-opcache:$(TAG)
 	@echo "$(GREEN)Deploying PHP8 Opcache:$(RESET) Done ✓"
 	@echo ""
 
 deploy-php-xdebug:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP8 XDebug$(RESET)"
-	- @docker push $(NAMESPACE)/php8-xdebug:$(TAG)
+	- @docker push $(NAMESPACE)/php81-xdebug:$(TAG)
 	@echo "$(GREEN)Deploying PHP8 XDebug:$(RESET) Done ✓"
 	@echo ""
 
 deploy-php-webgrind:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP8 Webgrind$(RESET)"
-	- @docker push $(NAMESPACE)/php8-webgrind:$(TAG)
+	- @docker push $(NAMESPACE)/php81-webgrind:$(TAG)
 	@echo "$(GREEN)Deploying PHP8 Webgrind:$(RESET) Done ✓"
 	@echo ""
 
 deploy-php-dusk:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP8 Dusk$(RESET)"
-	- @docker push $(NAMESPACE)/php8-dusk:$(DUSK_TAG)
+	- @docker push $(NAMESPACE)/php81-dusk:$(DUSK_TAG)
 	@echo "$(GREEN)Deploying PHP8 Dusk:$(RESET) Done ✓"
 	@echo ""
 
 deploy-php-queue-worker:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP8 Queue Worker$(RESET)"
-	- @docker push $(NAMESPACE)/php8-queue-worker:$(TAG)
+	- @docker push $(NAMESPACE)/php81-queue-worker:$(TAG)
 	@echo "$(GREEN)Deploying PHP8 Queue Worker:$(RESET) Done ✓"
 	@echo ""
 
 deploy-php-wordpress-cache:
 	@echo ""
 	@echo "$(GREEN)Deploying PHP8 WordPress Cache$(RESET)"
-	- @docker push $(NAMESPACE)/php8-wordpress-cache:$(TAG)
+	- @docker push $(NAMESPACE)/php81-wordpress-cache:$(TAG)
 	@echo "$(GREEN)Deploying PHP8 WordPress Cache:$(RESET) Done ✓"
 	@echo ""
 
