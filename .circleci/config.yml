@@ -13,6 +13,7 @@ jobs:
       - setup_remote_docker:
           version: 20.10.18
       - checkout
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker context create buildx-build
       - run: docker buildx create --use buildx-build
       - run: docker buildx bake --push
