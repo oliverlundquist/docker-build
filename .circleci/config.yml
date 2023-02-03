@@ -13,4 +13,4 @@ jobs:
       - setup_remote_docker:
           version: 20.10.18
       - checkout
-      - run: docker buildx build .
+      - run: docker buildx bake --push
