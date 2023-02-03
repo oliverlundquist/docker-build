@@ -13,9 +13,23 @@ jobs:
       - setup_remote_docker:
           version: 20.10.18
       - checkout
+      - run:
+          name: Setup buildx and qemu
+          command: |
+            sudo apt-get update -y
+            sudo apt-get install -y qemu-user-static
+            sudo apt-get install -y binfmt-support
+      - run:
+          name: Check versions
+          command: |
+            qemu-aarch64-static --version
+            update-binfmts --version
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker buildx ls
       - run: docker context create buildx-build
       - run: docker buildx create --use buildx-build
+      # docker buildx create --name arm-builder
+      # docker buildx use arm-builder
+      # docker buildx inspect --bootstrap
       - run: docker buildx ls
       - run: docker buildx bake --push
