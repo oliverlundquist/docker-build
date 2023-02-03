@@ -1,0 +1,15 @@
+FROM php:8.1.4-fpm
+MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+
+RUN { \
+        echo '#!/bin/sh'; \
+        echo 'usermod -u 500 www-data'; \
+        echo 'groupmod -g 500 www-data'; \
+    } > /root/run-script.sh \
+    && chmod +x /root/run-script.sh
+
+RUN mkdir -p /var/app/current
+WORKDIR /var/app/current
+
+ENTRYPOINT ["/root/run-script.sh"]
+CMD ["php-fpm"]
