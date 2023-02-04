@@ -1,23 +1,15 @@
 version: 2.1
 
-
-# - run:
-#           name: setup Qemu
-#           command: |
-#             docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-#       - run:
-#           name: Create builder
-#           command: |
-#             export DOCKER_CLI_EXPERIMENTAL=enabled
-#             docker context create multi-arch-build
-#             docker buildx create --use multi-arch-build
-
-
-
 workflows:
   build-deploy:
     jobs:
       - build
+
+# sudo apt-get install -y qemu binfmt-support qemu-user-static
+# docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+# docker buildx rm builder
+# docker buildx create --name builder --driver docker-container --use
+# docker buildx inspect --bootstrap
 
 jobs:
   build:
@@ -41,11 +33,14 @@ jobs:
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker buildx ls
       - run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+      # - run: docker buildx rm builder
+      - run: docker buildx create --name builder --driver docker-container --use
+      - run: docker buildx inspect --bootstrap
       - run: docker buildx ls
-      - run: docker context create multi-arch-build
-      - run: docker buildx create --use multi-arch-build
+      # - run: docker context create multi-arch-build
+      # - run: docker buildx create --use multi-arch-build
       # docker buildx create --name arm-builder
       # docker buildx use arm-builder
       # docker buildx inspect --bootstrap
-      - run: docker buildx ls
+      # - run: docker buildx ls
       - run: docker buildx bake --push
