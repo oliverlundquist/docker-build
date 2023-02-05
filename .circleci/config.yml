@@ -5,12 +5,6 @@ workflows:
     jobs:
       - build
 
-# sudo apt-get install -y qemu binfmt-support qemu-user-static
-# docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-# docker buildx rm builder
-# docker buildx create --name builder --driver docker-container --use
-# docker buildx inspect --bootstrap
-
 jobs:
   build:
     docker:
@@ -19,17 +13,7 @@ jobs:
       - setup_remote_docker:
           version: 20.10.18
       - checkout
-      - run:
-          name: Setup buildx and qemu
-          command: |
-            sudo apt-get update -y
-            sudo apt-get install -y qemu-user-static
-            sudo apt-get install -y binfmt-support
-      - run:
-          name: Check versions
-          command: |
-            qemu-aarch64-static --version
-            update-binfmts --version
+      - run: apt-get update && apt-get install -y qemu binfmt-support qemu-user-static
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker buildx ls
       - run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
