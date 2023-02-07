@@ -1,0 +1,21 @@
+FROM oliverlundquist/php7-base:latest
+MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+
+RUN docker-php-ext-install opcache
+
+RUN { \
+        echo 'opcache.enable=1'; \
+        echo 'opcache.validate_timestamps=VALIDATE_TIMESTAMPS'; \
+        echo 'opcache.revalidate_freq=REVALIDATE_FREQ'; \
+        echo 'opcache.save_comments=1'; \
+        echo 'opcache.fast_shutdown=0'; \
+    } >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+
+RUN { \
+        head -n -1 /root/run-script.sh; \
+        echo 'sed -i.bak s/VALIDATE_TIMESTAMPS/${VALIDATE_TIMESTAMPS:-0}/g /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini'; \
+        echo 'sed -i.bak s/REVALIDATE_FREQ/${REVALIDATE_FREQ:-2}/g /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini'; \
+        echo 'exec $@'; \
+    } > /root/run-script-opcache.sh \
+    && mv /root/run-script-opcache.sh /root/run-script.sh \
+    && chmod +x /root/run-script.sh

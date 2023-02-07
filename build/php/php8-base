@@ -1,0 +1,80 @@
+FROM php:8.1.4-fpm
+MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+
+ENV NVM_DIR      /root/.nvm
+ENV NVM_VERSION  0.39.1
+ENV NODE_VERSION 16.14.2
+ENV NODE_PATH    $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
+ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV LC_CTYPE C.UTF-8
+
+RUN apt-get update && apt-get install -y \
+        curl \
+        gnupg2 \
+        git \
+        procps \
+        ffmpeg \
+        tmux \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libonig-dev \
+        libmcrypt-dev \
+        libpng-dev \
+        libzip-dev \
+        zip \
+    && docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install zip \
+    && docker-php-ext-install bcmath \
+    && docker-php-ext-install sockets \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Redis C Extension
+RUN pecl install redis && docker-php-ext-enable redis
+
+# Install Composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php -r "if (hash_file('sha384', 'composer-setup.php') === '906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
+    && php composer-setup.php \
+    && php -r "unlink('composer-setup.php');" \
+    && mv composer.phar /usr/local/bin/composer \
+    && chmod 755 /usr/local/bin/composer
+
+# Install NVM and Node
+RUN mkdir -p $NVM_DIR \
+    && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION
+
+# Add www-data to root group, so that it has write permissions to storage/framework/views
+RUN usermod -a -G root www-data
+
+# Increase upload size limit to 4 MB
+COPY docker/build/assets/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+
+# Other shell scripts
+RUN echo '#!/bin/bash\nls -lah "$@"' > /usr/local/bin/ll \
+    && chmod 755 /usr/local/bin/ll
+
+RUN { \
+        echo '#!/bin/sh'; \
+        echo 'usermod -u 500 www-data'; \
+        echo 'groupmod -g 500 www-data'; \
+    } > /root/run-script.sh \
+    && chmod +x /root/run-script.sh
+
+RUN { \
+        echo 'touch /var/app/current/storage/logs/lumen.log > /dev/null 2>&1'; \
+        echo 'touch /var/app/current/storage/logs/laravel.log > /dev/null 2>&1'; \
+        echo 'chmod 664 /var/app/current/storage/logs/lumen.log > /dev/null 2>&1'; \
+        echo 'chmod 664 /var/app/current/storage/logs/laravel.log > /dev/null 2>&1'; \
+        echo 'exec $@'; \
+    } >> /root/run-script.sh
+
+RUN mkdir -p /var/app/current
+WORKDIR /var/app/current
+
+ENTRYPOINT ["/root/run-script.sh"]
+CMD ["php-fpm"]
