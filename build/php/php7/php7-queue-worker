@@ -1,5 +1,5 @@
-ARG PHP8_TAG
-FROM oliverlundquist/php81:${PHP8_TAG}
+ARG PHP7_TAG
+FROM oliverlundquist/php74:${PHP7_TAG}
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 RUN { \
