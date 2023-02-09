@@ -1,30 +1,97 @@
-version: '2'
+x-bake: &x-bake
+  platforms:
+    - linux/amd64
+    - linux/arm64/v8
+
 services:
+  ##
+  ## PHP7
+  ##
+  php7:
+    image: oliverlundquist/php74:${PHP7_TAG}
+    build:
+      dockerfile: build/php/php7/php7
+      args:
+        PHP7_TAG: ${PHP7_TAG}
+      x-bake: *x-bake
+  php7-opcache:
+    image: oliverlundquist/php74-opcache:${PHP7_TAG}
+    build:
+      dockerfile: build/php/php7/php7-opcache
+      args:
+        PHP7_TAG: ${PHP7_TAG}
+      x-bake: *x-bake
+  php7-queue-worker:
+    image: oliverlundquist/php74-queue-worker:${PHP7_TAG}
+    build:
+      dockerfile: build/php/php7/php7-queue-worker
+      args:
+        PHP7_TAG: ${PHP7_TAG}
+      x-bake: *x-bake
+  php7-xdebug:
+    image: oliverlundquist/php74-xdebug:${PHP7_TAG}
+    build:
+      dockerfile: build/php/php7/php7-xdebug
+      args:
+        PHP7_TAG: ${PHP7_TAG}
+      x-bake: *x-bake
+
+  ##
+  ## PHP8
+  ##
+  php8:
+    image: oliverlundquist/php81:${PHP8_TAG}
+    build:
+      dockerfile: build/php/php8/php8
+      args:
+        PHP8_TAG: ${PHP8_TAG}
+      x-bake: *x-bake
+  php8-opcache:
+    image: oliverlundquist/php81-opcache:${PHP8_TAG}
+    build:
+      dockerfile: build/php/php8/php8-opcache
+      args:
+        PHP8_TAG: ${PHP8_TAG}
+      x-bake: *x-bake
+  php8-queue-worker:
+    image: oliverlundquist/php81-queue-worker:${PHP8_TAG}
+    build:
+      dockerfile: build/php/php8/php8-queue-worker
+      args:
+        PHP8_TAG: ${PHP8_TAG}
+      x-bake: *x-bake
+  php8-xdebug:
+    image: oliverlundquist/php81-xdebug:${PHP8_TAG}
+    build:
+      dockerfile: build/php/php8/php8-xdebug
+      args:
+        PHP8_TAG: ${PHP8_TAG}
+      x-bake: *x-bake
+
+  ##
+  ## Other
+  ##
+  aws-cli:
+    image: oliverlundquist/aws-cli:${AWS_CLI_TAG}
+    build:
+      dockerfile: build/aws-cli
+      x-bake: *x-bake
+  logstash:
+    image: oliverlundquist/logstash:${LOGSTASH_TAG}
+    build:
+      dockerfile: build/logstash
+      args:
+        LOGSTASH_TAG: ${LOGSTASH_TAG}
+      x-bake: *x-bake
   nginx:
-    image: oliverlundquist/nginx:latest
-    ports:
-      - "80:80"
-    volumes:
-      - ~/docker/mystore-api/www:/var/app/current
-    networks:
-      - php-app
-  php:
-    image: oliverlundquist/php74:latest
-    volumes:
-      - ~/docker/mystore-api/www:/var/app/current
-    networks:
-      - php-app
-  mysql:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mystore2
-    ports:
-      - "3306:3306"
-    volumes:
-      - ~/docker/mystore-api/mysql:/var/lib/mysql
-    networks:
-      - php-app
-networks:
-  php-app:
-    driver: bridge
+    image: oliverlundquist/nginx:${NGINX_TAG}
+    build:
+      dockerfile: build/nginx
+      args:
+        NGINX_TAG: ${NGINX_TAG}
+      x-bake: *x-bake
+  pusher-local-dev-server:
+    image: oliverlundquist/pusher-local-dev-server:${PUSHER_TAG}
+    build:
+      dockerfile: build/pusher-local-dev-server
+      x-bake: *x-bake

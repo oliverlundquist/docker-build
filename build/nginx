@@ -1,12 +1,13 @@
-FROM nginx:1.17.9
+ARG NGINX_TAG
+FROM nginx:${NGINX_TAG}
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 RUN apt-get update && apt-get install -y \
         netcat \
     && rm -rf /var/lib/apt/lists/*
 
-COPY docker/build/assets/http.conf /etc/nginx/nginx.conf
-COPY docker/build/assets/server.conf /etc/nginx/conf.d/default.conf
+COPY build/assets/http.conf /etc/nginx/nginx.conf
+COPY build/assets/server.conf /etc/nginx/conf.d/default.conf
 
 RUN { \
         echo '#!/bin/sh'; \

@@ -1,4 +1,5 @@
-FROM oliverlundquist/php74:latest
+ARG PHP7_TAG
+FROM oliverlundquist/php74:${PHP7_TAG}
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 RUN pecl install xdebug-2.9.2 && docker-php-ext-enable xdebug

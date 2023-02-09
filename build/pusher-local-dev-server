@@ -1,4 +1,4 @@
-FROM ruby:2.3.4
+FROM ruby:2.6.10
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 WORKDIR /home
