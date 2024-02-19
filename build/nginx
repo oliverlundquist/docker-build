@@ -3,7 +3,7 @@ FROM nginx:${NGINX_TAG}
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 RUN apt-get update && apt-get install -y \
-        netcat \
+        netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
 
 COPY build/assets/http.conf /etc/nginx/nginx.conf

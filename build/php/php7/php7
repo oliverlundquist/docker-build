@@ -49,8 +49,9 @@ RUN mkdir -p $NVM_DIR \
 # Add www-data to root group, so that it has write permissions to storage/framework/views
 RUN usermod -a -G root www-data
 
-# Increase upload size limit to 4 MB
+# Increase upload size limit to 4 MB and hide X-Powered-By header
 COPY build/assets/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+COPY build/assets/settings.ini /usr/local/etc/php/conf.d/settings.ini
 
 # Other shell scripts
 RUN echo '#!/bin/bash\nls -lah "$@"' > /usr/local/bin/ll \
