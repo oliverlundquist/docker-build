@@ -3,8 +3,8 @@ FROM php:${PHP8_TAG}-fpm
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
 ENV NVM_DIR      /root/.nvm
-ENV NVM_VERSION  0.39.1
-ENV NODE_VERSION 16.14.2
+ENV NVM_VERSION  0.39.7
+ENV NODE_VERSION 20.10.0
 ENV NODE_PATH    $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER 1
@@ -37,7 +37,7 @@ RUN pecl install redis && docker-php-ext-enable redis
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
+    && php -r "if (hash_file('sha384', 'composer-setup.php') === 'edb40769019ccf227279e3bdd1f5b2e9950eb000c3233ee85148944e555d97be3ea4f40c3c2fe73b22f875385f6a5155') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer \
@@ -52,8 +52,9 @@ RUN mkdir -p $NVM_DIR \
 # Add www-data to root group, so that it has write permissions to storage/framework/views
 RUN usermod -a -G root www-data
 
-# Increase upload size limit to 4 MB
+# Increase upload size limit to 4 MB and hide X-Powered-By header
 COPY build/assets/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+COPY build/assets/settings.ini /usr/local/etc/php/conf.d/settings.ini
 
 # Other shell scripts
 RUN echo '#!/bin/bash\nls -lah "$@"' > /usr/local/bin/ll \
