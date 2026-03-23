@@ -1,8 +1,8 @@
 ARG PHP8_TAG
-FROM oliverlundquist/php83:${PHP8_TAG}
+FROM oliverlundquist/php84:${PHP8_TAG}
 MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
 
-RUN pecl install xdebug-3.3.1 && docker-php-ext-enable xdebug
+RUN pecl install xdebug-3.4.5 && docker-php-ext-enable xdebug
 
 RUN { \
         echo 'xdebug.mode=debug,profile,coverage'; \
