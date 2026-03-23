@@ -1,14 +1,14 @@
 ARG PHP7_TAG
 FROM php:${PHP7_TAG}-fpm
-MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+LABEL maintainer="Oliver Lundquist <mail@oliverlundquist.com>"
 
-ENV NVM_DIR      /root/.nvm
-ENV NVM_VERSION  0.35.1
-ENV NODE_VERSION 12.13.1
-ENV NODE_PATH    $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
-ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-ENV COMPOSER_ALLOW_SUPERUSER 1
-ENV LC_CTYPE C.UTF-8
+ENV NVM_DIR="/root/.nvm"
+ENV NVM_VERSION="0.35.1"
+ENV NODE_VERSION="12.13.1"
+ENV NODE_PATH="$NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules"
+ENV PATH="$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH"
+ENV COMPOSER_ALLOW_SUPERUSER="1"
+ENV LC_CTYPE="C.UTF-8"
 
 RUN apt-get update && apt-get install -y \
         curl \
