@@ -40,28 +40,28 @@ services:
   ## PHP8
   ##
   php8:
-    image: oliverlundquist/php84:${PHP8_TAG}
+    image: oliverlundquist/php85:${PHP8_TAG}
     build:
       dockerfile: build/php/php8/php8
       args:
         PHP8_TAG: ${PHP8_TAG}
       x-bake: *x-bake
   php8-opcache:
-    image: oliverlundquist/php84-opcache:${PHP8_TAG}
+    image: oliverlundquist/php85-opcache:${PHP8_TAG}
     build:
       dockerfile: build/php/php8/php8-opcache
       args:
         PHP8_TAG: ${PHP8_TAG}
       x-bake: *x-bake
   php8-queue-worker:
-    image: oliverlundquist/php84-queue-worker:${PHP8_TAG}
+    image: oliverlundquist/php85-queue-worker:${PHP8_TAG}
     build:
       dockerfile: build/php/php8/php8-queue-worker
       args:
         PHP8_TAG: ${PHP8_TAG}
       x-bake: *x-bake
   php8-xdebug:
-    image: oliverlundquist/php84-xdebug:${PHP8_TAG}
+    image: oliverlundquist/php85-xdebug:${PHP8_TAG}
     build:
       dockerfile: build/php/php8/php8-xdebug
       args:

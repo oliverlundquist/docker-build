@@ -1,14 +1,14 @@
-ARG PHP8_TAG
+ARG PHP8_TAG=some-nonsense-tag-to-satisfy-the-docker-parser-and-linter
 FROM php:${PHP8_TAG}-fpm
-MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+LABEL maintainer="Oliver Lundquist <mail@oliverlundquist.com>"
 
-ENV NVM_DIR      /root/.nvm
-ENV NVM_VERSION  0.40.1
-ENV NODE_VERSION 22.11.0
-ENV NODE_PATH    $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
-ENV PATH         $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-ENV COMPOSER_ALLOW_SUPERUSER 1
-ENV LC_CTYPE C.UTF-8
+ENV NVM_DIR=/root/.nvm
+ENV NVM_VERSION=0.40.4
+ENV NODE_VERSION=24.14.0
+ENV NODE_PATH=$NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
+ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV LC_CTYPE=C.UTF-8
 
 RUN apt-get update && apt-get install -y \
         curl \
@@ -37,7 +37,7 @@ RUN pecl install redis && docker-php-ext-enable redis
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php -r "if (hash_file('sha384', 'composer-setup.php') === 'dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
+    && php -r "if (hash_file('sha384', 'composer-setup.php') === 'c8b085408188070d5f52bcfe4ecfbee5f727afa458b2573b8eaaf77b3419b0bf2768dc67c86944da1544f06fa544fd47') { echo 'Installer verified'.PHP_EOL; } else { echo 'Installer corrupt'.PHP_EOL; unlink('composer-setup.php'); exit(1); }" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer \
