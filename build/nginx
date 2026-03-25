@@ -1,4 +1,4 @@
-ARG NGINX_TAG
+ARG NGINX_TAG=some-nonsense-tag-to-satisfy-the-docker-parser-and-linter
 FROM nginx:${NGINX_TAG}
 LABEL maintainer="Oliver Lundquist <mail@oliverlundquist.com>"
 
