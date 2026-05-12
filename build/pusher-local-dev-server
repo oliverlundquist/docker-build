@@ -1,5 +1,5 @@
 FROM ruby:2.6.10
-MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+LABEL maintainer="Oliver Lundquist <mail@oliverlundquist.com>"
 
 WORKDIR /home
 

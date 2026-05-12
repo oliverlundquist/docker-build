@@ -1,5 +1,5 @@
 ARG LOGSTASH_TAG
 FROM docker.elastic.co/logstash/logstash:${LOGSTASH_TAG}
-MAINTAINER Oliver Lundquist "mail@oliverlundquist.com"
+LABEL maintainer="Oliver Lundquist <mail@oliverlundquist.com>"
 
 CMD ["--path.config", "/var/app/current/.logstash/logstash.conf", "--path.settings", "/var/app/current/.logstash"]
