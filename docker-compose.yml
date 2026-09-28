@@ -5,38 +5,6 @@ x-bake: &x-bake
 
 services:
   ##
-  ## PHP7
-  ##
-  php7:
-    image: oliverlundquist/php74:${PHP7_TAG}
-    build:
-      dockerfile: build/php/php7/php7
-      args:
-        PHP7_TAG: ${PHP7_TAG}
-      x-bake: *x-bake
-  php7-opcache:
-    image: oliverlundquist/php74-opcache:${PHP7_TAG}
-    build:
-      dockerfile: build/php/php7/php7-opcache
-      args:
-        PHP7_TAG: ${PHP7_TAG}
-      x-bake: *x-bake
-  php7-queue-worker:
-    image: oliverlundquist/php74-queue-worker:${PHP7_TAG}
-    build:
-      dockerfile: build/php/php7/php7-queue-worker
-      args:
-        PHP7_TAG: ${PHP7_TAG}
-      x-bake: *x-bake
-  php7-xdebug:
-    image: oliverlundquist/php74-xdebug:${PHP7_TAG}
-    build:
-      dockerfile: build/php/php7/php7-xdebug
-      args:
-        PHP7_TAG: ${PHP7_TAG}
-      x-bake: *x-bake
-
-  ##
   ## PHP8
   ##
   php8:

@@ -20,8 +20,8 @@ docker buildx bake --push --provenance=false --sbom=false
 
 #### When introducing new PHP versions
 ```
-docker buildx bake --print php7 php8
-docker buildx bake --push php7 php8
+docker buildx bake --print php8 php8-opcache
+docker buildx bake --push php8 php8-opcache
 ```
 
 ### Inspect Docker manifest on DockerHub
