@@ -2,7 +2,7 @@ ARG PHP8_TAG=some-nonsense-tag-to-satisfy-the-docker-parser-and-linter
 FROM oliverlundquist/php85:${PHP8_TAG}
 LABEL maintainer="Oliver Lundquist <mail@oliverlundquist.com>"
 
-RUN pecl install xdebug-3.5.1 && docker-php-ext-enable xdebug
+RUN pecl install xdebug-3.5.3 && docker-php-ext-enable xdebug
 
 RUN { \
         echo 'xdebug.mode=debug,profile,coverage'; \

@@ -1,5 +1,34 @@
-ARG LOGSTASH_TAG
+ARG LOGSTASH_TAG=some-nonsense-tag-to-satisfy-the-docker-parser-and-linter
 FROM docker.elastic.co/logstash/logstash:${LOGSTASH_TAG}
 LABEL maintainer="Oliver Lundquist <mail@oliverlundquist.com>"
 
-CMD ["--path.config", "/var/app/current/.logstash/logstash.conf", "--path.settings", "/var/app/current/.logstash"]
+###############################################################################################
+# Temporary security fixes for Logstash 9.5.4, delete this block at the next Logstash upgrade #
+###############################################################################################
+USER root
+RUN microdnf -y upgrade --nodocs \
+    && microdnf clean all
+USER logstash
+###############################################################################################
+# End of temporary security fixes for Logstash 9.5.4                                          #
+###############################################################################################
+
+RUN bin/logstash-plugin install --version 2.1.1 logstash-output-opensearch
+
+###############################################################################################
+# Temporary security fixes for Logstash 9.5.4, delete this block at the next Logstash upgrade #
+###############################################################################################
+RUN bin/logstash-plugin remove logstash-filter-elastic_integration \
+    && bin/logstash-plugin remove logstash-integration-kafka
+USER root
+RUN rm -rf /usr/share/logstash/vendor/jruby/lib/ruby/stdlib/org/bouncycastle
+USER logstash
+###############################################################################################
+# End of temporary security fixes for Logstash 9.5.4                                          #
+###############################################################################################
+
+# Limit JVM memory so the container stays within the 1024 MB memory limit set in AWS EB Dockerrun.aws.json
+ENV LS_JAVA_OPTS="-Xms512m -Xmx512m -XX:MaxMetaspaceSize=256m -XX:MaxDirectMemorySize=128m" \
+    XPACK_MONITORING_ENABLED=false
+
+CMD ["--path.config", "/var/app/current/.logstash/logstash.conf"]
