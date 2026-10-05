@@ -12,7 +12,7 @@ services:
     build:
       dockerfile: build/php/php8/php8
       args:
-        PHP8_TAG: ${PHP8_TAG}
+        PHP8_VERSION: ${PHP8_VERSION}
       x-bake: *x-bake
   php8-opcache:
     image: oliverlundquist/php85-opcache:${PHP8_TAG}

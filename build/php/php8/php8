@@ -1,5 +1,5 @@
-ARG PHP8_TAG=some-nonsense-tag-to-satisfy-the-docker-parser-and-linter
-FROM php:${PHP8_TAG}-fpm
+ARG PHP8_VERSION=some-nonsense-tag-to-satisfy-the-docker-parser-and-linter
+FROM php:${PHP8_VERSION}-fpm
 LABEL maintainer="Oliver Lundquist <mail@oliverlundquist.com>"
 
 ENV NVM_DIR=/root/.nvm
@@ -10,7 +10,7 @@ ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV LC_CTYPE=C.UTF-8
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
         curl \
         gnupg2 \
         git \
