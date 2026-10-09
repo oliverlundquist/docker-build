@@ -56,6 +56,9 @@ RUN usermod -a -G root www-data
 COPY build/assets/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 COPY build/assets/settings.ini /usr/local/etc/php/conf.d/settings.ini
 
+# Make php-fpm pool max_children configurable through the PHP_FPM_PM_MAX_CHILDREN env var (defaults to 5)
+COPY build/assets/php-fpm-pool.conf /usr/local/etc/php-fpm.d/zz-pool.conf
+
 # Other shell scripts
 RUN echo '#!/bin/bash\nls -lah "$@"' > /usr/local/bin/ll \
     && chmod 755 /usr/local/bin/ll
