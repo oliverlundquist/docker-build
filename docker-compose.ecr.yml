@@ -1,0 +1,39 @@
+# Override file for pushing images to AWS ECR instead of Docker Hub, see readme.md
+# ECR_PREFIX is the registry plus repository namespace, e.g. 123456789012.dkr.ecr.eu-west-1.amazonaws.com/my-namespace
+
+services:
+  php8:
+    image: ${ECR_PREFIX:?ECR_PREFIX must be set}/php-base:${PHP8_TAG}
+    build:
+      x-bake:
+        tags:
+          - ${ECR_PREFIX:?ECR_PREFIX must be set}/php-base:${PHP8_TAG}
+          - ${ECR_PREFIX:?ECR_PREFIX must be set}/php-base:latest
+  php8-opcache:
+    image: ${ECR_PREFIX:?ECR_PREFIX must be set}/php:${PHP8_TAG}
+    build:
+      x-bake:
+        tags:
+          - ${ECR_PREFIX:?ECR_PREFIX must be set}/php:${PHP8_TAG}
+          - ${ECR_PREFIX:?ECR_PREFIX must be set}/php:latest
+  php8-queue-worker:
+    image: ${ECR_PREFIX:?ECR_PREFIX must be set}/php-queue-worker:${PHP8_TAG}
+    build:
+      x-bake:
+        tags:
+          - ${ECR_PREFIX:?ECR_PREFIX must be set}/php-queue-worker:${PHP8_TAG}
+          - ${ECR_PREFIX:?ECR_PREFIX must be set}/php-queue-worker:latest
+  nginx:
+    image: ${ECR_PREFIX:?ECR_PREFIX must be set}/nginx:${NGINX_TAG}
+    build:
+      x-bake:
+        tags:
+          - ${ECR_PREFIX:?ECR_PREFIX must be set}/nginx:${NGINX_TAG}
+          - ${ECR_PREFIX:?ECR_PREFIX must be set}/nginx:latest
+  logstash:
+    image: ${ECR_PREFIX:?ECR_PREFIX must be set}/logstash:${LOGSTASH_TAG}
+    build:
+      x-bake:
+        tags:
+          - ${ECR_PREFIX:?ECR_PREFIX must be set}/logstash:${LOGSTASH_TAG}
+          - ${ECR_PREFIX:?ECR_PREFIX must be set}/logstash:latest

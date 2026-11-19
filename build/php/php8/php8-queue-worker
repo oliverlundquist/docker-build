@@ -1,5 +1,4 @@
-ARG PHP8_TAG=some-nonsense-tag-to-satisfy-the-docker-parser-and-linter
-FROM oliverlundquist/php85:${PHP8_TAG}
+FROM php85-base
 LABEL maintainer="Oliver Lundquist <mail@oliverlundquist.com>"
 
 RUN { \

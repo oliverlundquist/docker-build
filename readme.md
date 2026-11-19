@@ -28,3 +28,21 @@ docker buildx bake --push php8 php8-opcache
 ```
 docker manifest inspect <image>:<tag>
 ```
+
+### Docker Hub or AWS ECR
+Image versions are set in `.env` and used for both registries. Which registry the images are pushed to depends on the compose files passed to `docker buildx bake`:
+
+- `docker-compose.yml` only (the default): pushes to Docker Hub
+- `docker-compose.yml` + `docker-compose.ecr.yml`: pushes to AWS ECR, tagged with both the version from `.env` and `latest`
+
+The child PHP images (`php8-opcache`, `php8-queue-worker`, `php8-xdebug`) build on top of the `php8` image from the same bake run, so the base image never needs to be pushed first.
+
+#### Push to AWS ECR
+`ECR_PREFIX` is the registry plus the repository namespace. The images are pushed to `<ECR_PREFIX>/php-base`, `/php`, `/php-queue-worker`, `/nginx` and `/logstash`, and these repositories need to exist in ECR.
+```
+export ECR_PREFIX=<account-id>.dkr.ecr.<region>.amazonaws.com/<namespace>
+aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <account-id>.dkr.ecr.<region>.amazonaws.com
+docker buildx bake -f docker-compose.yml -f docker-compose.ecr.yml --print php8 php8-opcache php8-queue-worker nginx logstash
+docker buildx bake -f docker-compose.yml -f docker-compose.ecr.yml --push --pull --no-cache php8 php8-opcache php8-queue-worker nginx logstash
+```
+Always name the targets when pushing to ECR. Targets that aren't in `docker-compose.ecr.yml` keep their Docker Hub names.
